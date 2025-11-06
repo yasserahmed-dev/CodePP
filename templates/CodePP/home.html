@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}الصفحة الرئيسية{% endblock %}
+
+{% block content %}
+<main class="dashboard">
+  <section class="welcome">
+    <h1>مرحباً بعودتك إلى Code++، {% if user.is_authenticated %}<span id="username">{{ user.first_name }}</span>{% else %} user {% endif %}</h1>
+    <p>واصل التعلم والتطوير، واختر اللغة التي ترغب بتعلمها.</p>
+    <button class="main-btn">ابدأ التعلم</button>
+  </section>
+
+  <section class="courses">
+    <div class="course-card">
+      <img src="https://img.icons8.com/color/96/html-5--v1.png" alt="HTML">
+      <h3>HTML</h3>
+      <p>تعلم بناء واجهات المواقع</p>
+      <button>ابدأ الدورة</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://img.icons8.com/color/96/css3.png" alt="CSS">
+      <h3>CSS</h3>
+      <p>تعلم تنسيق صفحات الويب</p>
+      <button>ابدأ الدورة</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://img.icons8.com/color/96/javascript.png" alt="JavaScript">
+      <h3>JavaScript</h3>
+      <p>برمجة المواقع التفاعلية</p>
+      <button>ابدأ الدورة</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://img.icons8.com/color/96/python.png" alt="Python">
+      <h3>Python</h3>
+      <p>تحليل البيانات والذكاء الاصطناعي</p>
+      <button>ابدأ الدورة</button>
+    </div>
+  </section>
+
+  <!-- <section class="progress">
+    <h2>تقدّمك في التعلم</h2>
+    <div class="progress-item"><span>HTML</span><div class="bar"><div style="width:80%"></div></div><span>٨٠٪</span></div>
+    <div class="progress-item"><span>CSS</span><div class="bar"><div style="width:45%"></div></div><span>٤٥٪</span></div>
+    <div class="progress-item"><span>JavaScript</span><div class="bar"><div style="width:60%"></div></div><span>٦٠٪</span></div>
+    <div class="progress-item"><span>Python</span><div class="bar"><div style="width:20%"></div></div><span>٢٠٪</span></div>
+  </section> -->
+</main>
+<style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom right, #b3d4ff, #cbb2ff);
+  color: #222;
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 15px 60px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.logo span {
+  color: #6c63ff;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.navbar li {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.navbar li:hover, .navbar .active {
+  color: #6c63ff;
+}
+
+.dashboard {
+  padding: 50px;
+  text-align: center;
+}
+
+.welcome h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.welcome p {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.main-btn {
+  background: linear-gradient(to right, #6c63ff, #7b8bff);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.courses {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 50px 0;
+  flex-wrap: wrap;
+}
+
+.course-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  width: 220px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.course-card:hover {
+  transform: translateY(-10px);
+}
+
+.course-card img {
+  width: 70px;
+  margin-bottom: 15px;
+}
+
+.course-card button {
+  background: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.progress {
+  text-align: left;
+  max-width: 700px;
+  margin: auto;
+}
+
+.progress-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.bar {
+  flex: 1;
+  height: 10px;
+  background: #eee;
+  margin: 0 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  background: linear-gradient(to right, #6c63ff, #7b8bff);
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #555;
+}
+
+</style>
+{% endblock %}

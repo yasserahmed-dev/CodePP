@@ -1,0 +1,127 @@
+<header class="navbar">
+  <div class="logo" dir="ltr">
+    <a href="{% url 'home' %}">Code<span>++</span></a>
+  </div>
+
+  <nav>
+    <ul class="nav-links">
+      <li class="active"><a href="{% url 'home' %}">الرئيسية</a></li>
+      <li><a href="#">الدورات</a></li>
+      <li><a href="#">التدريب</a></li>
+      <li><a href="#">التقدّم</a></li>
+      <li><a href="#">الملف الشخصي</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'logout' %}" class="btn-logout">تسجيل الخروج</a></li>
+      {% else %}
+      <li><a href="{% url 'login' %}" class="btn-login">تسجيل الدخول</a></li>
+      <li><a href="{% url 'signup' %}" class="btn-signup">إنشاء حساب</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <!-- أيقونة هامة للشاشات الصغيرة -->
+  <div class="menu-toggle">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+</header>
+
+<style>
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 15px 30px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1050;
+}
+
+.logo a {
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #6c63ff;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.nav-links li a:hover,
+.nav-links li.active a {
+  background: linear-gradient(to right, #6c63ff, #7b8bff);
+  color: #fff;
+}
+
+.btn-login,
+.btn-signup,
+.btn-logout {
+  background: #6c63ff;
+  color: #fff !important;
+  padding: 6px 14px;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+.btn-login:hover,
+.btn-signup:hover,
+.btn-logout:hover {
+  background: #7b8bff;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav-links {
+    position: fixed;
+    right: -100%;
+    top: 70px;
+    flex-direction: column;
+    background: #fff;
+    width: 200px;
+    gap: 15px;
+    padding: 20px;
+    transition: right 0.3s ease;
+    border-left: 1px solid #eee;
+    height: calc(100% - 70px);
+  }
+  .nav-links.active {
+    right: 0;
+  }
+  .menu-toggle {
+    display: block;
+  }
+}
+</style>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const navLinks = document.querySelector('.nav-links');
+toggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+</script>
