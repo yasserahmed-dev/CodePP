@@ -6,12 +6,14 @@
   <title>غير مصرح لك | Code++</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex flex-col justify-center items-center min-h-screen text-center">
-  <h1 class="text-8xl font-extrabold text-red-500 mb-4">403</h1>
-  <h2 class="text-3xl font-semibold mb-2">ليس لديك صلاحية الوصول 🚫</h2>
+<body class="bg-gradient-to-br from-red-100 via-red-50 to-white flex flex-col justify-center items-center min-h-screen text-center">
+  <h1 class="text-8xl font-extrabold text-red-600 mb-4 animate-pulse">403</h1>
+  <h2 class="text-3xl font-semibold mb-2 text-gray-800">ليس لديك صلاحية الوصول 🚫</h2>
   <p class="text-gray-600 mb-6">يبدو أنك تحاول الدخول إلى صفحة غير مسموح بها.</p>
-  <a href="{% url 'home' %}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+  <a href="{% url 'home' %}" 
+     class="bg-red-600 text-white px-8 py-3 rounded-lg hover:bg-red-700 transition transform hover:-translate-y-1 hover:shadow-lg">
     العودة إلى الصفحة الرئيسية
   </a>
 </body>
+
 </html>

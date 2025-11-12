@@ -39,7 +39,7 @@
   </div>
 
   <script>
-    // إخفاء الرسائل بعد 5 ثواني
+    // إخفاء الرسائل بعد 2 ثواني
     setTimeout(() => {
       const alerts = document.querySelectorAll("#messages-container .alert");
       alerts.forEach(alert => {
@@ -47,7 +47,7 @@
         alert.classList.add("animate__fadeOutUp");
         setTimeout(() => alert.remove(), 1000);
       });
-    }, 5000);
+    }, 2000);
   </script>
 
 </body>

@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model, authenticate, login, logout
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 import random
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 from .models import CodeOTP
 
@@ -13,20 +15,28 @@ User = get_user_model()
 # تسجيل الدخول
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # التحقق من صحة البريد
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'الرجاء إدخال بريد إلكتروني صالح.')
+            return render(request, 'login/login.html')
 
         try:
             user = User.objects.get(email=email)
-            user = authenticate(request, username=user.username, password=password)
-            if user is not None:
-                login(request, user)
+            user_auth = authenticate(request, username=user.username, password=password)
+            if user_auth is not None:
+                login(request, user_auth)
                 messages.success(request, f'مرحباً {user.first_name} 👋 تم تسجيل الدخول بنجاح.')
                 return redirect('home')
             else:
                 messages.error(request, 'كلمة المرور غير صحيحة.')
         except User.DoesNotExist:
             messages.error(request, 'البريد الإلكتروني غير موجود.')
+
     return render(request, 'login/login.html')
 
 
@@ -40,21 +50,31 @@ def logout_view(request):
 # إنشاء حساب جديد
 def signup(request):
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
         terms = request.POST.get('terms')
 
+        # التحقق من الموافقة على الشروط
         if not terms:
             messages.error(request, 'يجب الموافقة على الشروط والأحكام.')
             return redirect('signup')
 
+        # التحقق من صحة البريد الإلكتروني
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'الرجاء إدخال بريد إلكتروني صالح.')
+            return redirect('signup')
+
+        # التحقق من وجود البريد مسبقًا
         if User.objects.filter(email=email).exists():
             messages.error(request, 'البريد الإلكتروني موجود بالفعل.')
             return redirect('signup')
 
+        # التحقق من كلمة المرور
         if len(password1) < 8:
             messages.error(request, 'كلمة المرور يجب أن تكون 8 أحرف على الأقل.')
             return redirect('signup')
@@ -63,6 +83,7 @@ def signup(request):
             messages.error(request, 'كلمتا المرور غير متطابقتين.')
             return redirect('signup')
 
+        # إنشاء المستخدم
         User.objects.create_user(
             first_name=first_name,
             last_name=last_name,
@@ -81,6 +102,14 @@ def signup(request):
 def password_reset(request):
     if request.method == 'POST':
         email = request.POST.get('email')
+
+        # التحقق من صحة البريد
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'الرجاء إدخال بريد إلكتروني صالح.')
+            return redirect('reset_password')
+
         if not User.objects.filter(email=email).exists():
             messages.error(request, 'البريد الإلكتروني غير موجود.')
             return redirect('reset_password')
@@ -88,10 +117,11 @@ def password_reset(request):
         user = User.objects.get(email=email)
         random_code = str(random.randint(1000, 9999))
 
-        # حذف الأكواد القديمة
+        # حذف الأكواد القديمة وإنشاء جديد
         CodeOTP.objects.filter(user=user).delete()
         CodeOTP.objects.create(user=user, code=random_code)
 
+        # إرسال البريد
         send_mail(
             subject='🔐 كود استعادة كلمة المرور',
             message=f'استخدم الكود التالي لتغيير كلمة المرور الخاصة بك:\n\n{random_code}\n\nفريق Code++',
@@ -107,16 +137,15 @@ def password_reset(request):
     return render(request, 'login/password_reset.html')
 
 
-# التحقق من الكود
+# التحقق من الكود OTP
 def verify_otp(request):
+    email = request.session.get('reset_email')
+    if not email:
+        messages.error(request, 'انتهت صلاحية الجلسة. الرجاء إعادة المحاولة.')
+        return redirect('reset_password')
+
     if request.method == 'POST':
         otp_code = request.POST.get('otp_code')
-        email = request.session.get('reset_email')
-
-        if not email:
-            messages.error(request, 'انتهت صلاحية الجلسة. الرجاء إعادة المحاولة.')
-            return redirect('reset_password')
-
         try:
             user = User.objects.get(email=email)
             code_obj = CodeOTP.objects.get(user=user, code=otp_code)

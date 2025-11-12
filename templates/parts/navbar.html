@@ -5,16 +5,16 @@
 
   <nav>
     <ul class="nav-links">
-      <li class="active"><a href="{% url 'home' %}">الرئيسية</a></li>
+      <li><a href="{% url 'profile' %}">الملف الشخصي</a></li>
+      <li><a href="{% url 'home' %}">الرئيسية</a></li>
       <li><a href="#">الدورات</a></li>
       <li><a href="#">التدريب</a></li>
       <li><a href="#">التقدّم</a></li>
-      <li><a href="#">الملف الشخصي</a></li>
       {% if user.is_authenticated %}
-      <li><a href="{% url 'logout' %}" class="btn-logout">تسجيل الخروج</a></li>
+      <li><a href="{% url 'logout' %}">تسجيل الخروج</a></li>
       {% else %}
-      <li><a href="{% url 'login' %}" class="btn-login">تسجيل الدخول</a></li>
-      <li><a href="{% url 'signup' %}" class="btn-signup">إنشاء حساب</a></li>
+      <li><a href="{% url 'login' %}">تسجيل الدخول</a></li>
+      <li><a href="{% url 'signup' %}">إنشاء حساب</a></li>
       {% endif %}
     </ul>
   </nav>

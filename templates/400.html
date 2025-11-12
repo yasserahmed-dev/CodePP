@@ -6,12 +6,16 @@
   <title>طلب غير صالح | Code++</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex flex-col justify-center items-center min-h-screen text-center">
-  <h1 class="text-8xl font-extrabold text-yellow-500 mb-4">400</h1>
-  <h2 class="text-3xl font-semibold mb-2">حدث خطأ في الطلب 😕</h2>
-  <p class="text-gray-600 mb-6">البيانات التي أرسلتها غير صحيحة أو غير مكتملة.</p>
-  <a href="{% url 'home' %}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+<body class="bg-gradient-to-br from-yellow-50 via-yellow-100 to-white flex flex-col justify-center items-center min-h-screen text-center">
+
+  <h1 class="text-8xl font-extrabold text-yellow-500 mb-4 animate-pulse">400</h1>
+  <h2 class="text-3xl font-semibold mb-2 text-gray-800">حدث خطأ في الطلب 😕</h2>
+  <p class="text-gray-600 mb-6">البيانات التي أرسلتها غير صحيحة أو غير مكتملة. حاول تعديلها وإعادة الإرسال.</p>
+  
+  <a href="{% url 'home' %}" 
+     class="bg-yellow-500 text-white px-8 py-3 rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1 hover:shadow-lg">
     العودة إلى الصفحة الرئيسية
   </a>
+
 </body>
 </html>

@@ -1,0 +1,224 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block title %}الملف الشخصي | Code++{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="profile-card">
+    <!-- الترحيب -->
+    <h1>مرحباً، {{ user.first_name }} {{ user.last_name }}</h1>
+    <p class="email">البريد الإلكتروني: {{ user.email }}</p>
+
+    <!-- الشهادات -->
+    <div class="section">
+      <h2>🎓 شهاداتك</h2>
+      {% if user.certificates.exists %}
+        <div class="certificates-gallery">
+          {% for cert in user.certificates.all %}
+            <a href="{{ cert.file.url }}" target="_blank">
+              <img src="{{ cert.file.url }}" alt="{{ cert.course_name }}">
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>لا توجد شهادات حتى الآن.</p>
+      {% endif %}
+    </div>
+
+    <!-- الكورسات -->
+    <div class="section">
+      <h2>📚 الكورسات المسجلة</h2>
+      {% if user.enrolled_courses.exists %}
+        <ul class="courses-list">
+          {% for course in user.enrolled_courses.all %}
+            <li>
+              <img src="{{ course.image.url }}" alt="{{ course.title }}">
+              <div>
+                <strong>{{ course.title }}</strong><br>
+                <span>{{ course.category.name }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>لم تشترك في أي كورسات بعد.</p>
+      {% endif %}
+    </div>
+
+    <!-- الأزرار -->
+    <div class="buttons">
+      <a href="{% url 'edit_profile' %}" class="btn">✏️ تعديل الملف الشخصي</a>
+      <a href="{% url 'change_password' %}" class="btn">🔑 تغيير كلمة المرور</a>
+      <a href="{% url 'delete_account_request' %}" class="btn btn-danger" onclick="return confirm('هل أنت متأكد من حذف الحساب؟')">🗑️ حذف الحساب</a>
+      <a href="{% url 'logout' %}" class="btn btn-logout">🚪 تسجيل الخروج</a>
+    </div>
+  </div>
+</div>
+
+<style>
+:root {
+  --primary: #3b82f6;
+  --danger: #ef4444;
+  --logout: #6b7280;
+  --white: #fff;
+  --text: #333;
+  --radius: 16px;
+  --shadow: 0 20px 50px rgba(59, 130, 246, 0.15);
+  --font: 'Cairo', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
+
+body {
+  direction: rtl;
+  background-image: url("{% static 'images/bg.png' %}");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.5rem 2rem;
+  width: 520px;
+  max-width: 95%;
+  text-align: center;
+}
+
+.profile-card h1 {
+  margin-bottom: 0.5rem;
+  background: linear-gradient(150deg, #3b82f6, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 28px;
+}
+
+.profile-card .email {
+  margin-bottom: 1.5rem;
+  color: #586272;
+  font-size: 15px;
+}
+
+.section {
+  margin-bottom: 1.8rem;
+  text-align: right;
+}
+
+.section h2 {
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.certificates-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.certificates-gallery a {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.certificates-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.certificates-gallery img:hover {
+  transform: scale(1.1);
+}
+
+/* الكورسات */
+.courses-list {
+  list-style: none;
+  padding: 0;
+}
+
+.courses-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  transition: background 0.3s;
+}
+
+.courses-list li:hover {
+  background: #eff6ff;
+}
+
+.courses-list img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.courses-list strong {
+  color: var(--text);
+  font-size: 16px;
+}
+
+.courses-list span {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 50px;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--primary);
+  text-align: center;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-danger { background: var(--danger); }
+.btn-logout { background: var(--logout); }
+
+@media (max-width: 480px) {
+  .profile-card { width: 95%; padding: 1.5rem; }
+  .profile-card h1 { font-size: 24px; }
+  .certificates-gallery a { width: 70px; height: 70px; }
+}
+</style>
+{% endblock %}

@@ -1,26 +1,35 @@
 {% extends 'base_auth.html' %}
 {% load static %}
 
-{% block title %}التحقق من الرمز | Code++{% endblock %}
+{% block title %}تعديل الملف الشخصي | Code++{% endblock %}
 
 {% block content %}
 <div class="container">
-  <div class="login-card">
-    <h1>تحقق من الرمز</h1>
-    <p class="subtitle">أدخل رمز التحقق المرسل إلى بريدك الإلكتروني</p>
+  <div class="edit-card">
+    <h1>تعديل الملف الشخصي</h1>
 
-    <form method="POST" action="{% url 'verify_otp' %}">
+    <form method="POST" action="{% url 'edit_profile' %}">
       {% csrf_token %}
 
       <div class="input-group">
-        <span class="icon"><i class="fa-solid fa-key"></i></span>
-        <input type="text" name="otp_code" placeholder="أدخل رمز التحقق" required>
+        <span class="icon"><i class="fa-solid fa-user"></i></span>
+        <input type="text" name="first_name" placeholder="الاسم الشخصي" value="{{ user.first_name }}" required>
       </div>
 
-      <button type="submit" class="btn">تأكيد</button>
+      <div class="input-group">
+        <span class="icon"><i class="fa-solid fa-user"></i></span>
+        <input type="text" name="last_name" placeholder="الاسم العائلي" value="{{ user.last_name }}" required>
+      </div>
+
+      <div class="input-group">
+        <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+        <input type="email" name="email" placeholder="البريد الإلكتروني" value="{{ user.email }}" required>
+      </div>
+
+      <button type="submit" class="btn">حفظ التعديلات</button>
 
       <div class="links">
-        <a href="{% url 'login' %}">تسجيل الدخول</a>
+        <a href="{% url 'profile' %}">العودة إلى الملف الشخصي</a>
       </div>
     </form>
   </div>
@@ -36,31 +45,22 @@
   --font: 'Poppins', sans-serif;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--font);
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
 
 body {
   background-image: url("{% static 'images/bg.png' %}");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
+.container { width: 100%; display: flex; justify-content: center; }
 
-.login-card {
+.edit-card {
   background: var(--white);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -70,18 +70,12 @@ body {
   text-align: center;
 }
 
-.login-card h1 {
-  margin-bottom: 1rem;
+.edit-card h1 {
+  margin-bottom: 1.5rem;
   background: linear-gradient(150deg, #3b82f6, #2563eb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 28px;
-}
-
-.subtitle {
-  color: #586272;
-  font-size: 15px;
-  margin-bottom: 1.5rem;
 }
 
 .input-group {
@@ -96,9 +90,6 @@ body {
   border-radius: 10px;
   outline: none;
   font-size: 1rem;
-  text-align: center;
-  letter-spacing: 2px;
-  direction: ltr;
   transition: 0.2s;
 }
 
@@ -136,9 +127,9 @@ body {
 
 .links {
   display: flex;
-  justify-content: center; /* الرابط في المنتصف */
-  margin-top: 1.5rem;
-  font-size: 0.95rem;
+  justify-content: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
 .links a {
@@ -152,22 +143,9 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .login-card {
-    width: 90%;
-    padding: 2rem 1.5rem;
-  }
-  .btn { width: 70%; }
-  .links { flex-direction: column; gap: 0.6rem; }
-}
-
 @media (max-width: 480px) {
-  .login-card {
-    width: 95%;
-    padding: 1.5rem 1rem;
-  }
-  .input-group input { padding: 0.7rem 2rem; font-size: 0.9rem; }
-  .btn { width: 80%; font-size: 0.9rem; }
+  .edit-card { width: 95%; padding: 1.5rem; }
+  .edit-card h1 { font-size: 24px; }
 }
 </style>
 {% endblock %}

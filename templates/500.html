@@ -6,12 +6,16 @@
   <title>خطأ في السيرفر | Code++</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex flex-col justify-center items-center min-h-screen text-center">
-  <h1 class="text-8xl font-extrabold text-purple-600 mb-4">500</h1>
-  <h2 class="text-3xl font-semibold mb-2">حدث خطأ في السيرفر ⚙️</h2>
+<body class="bg-gradient-to-br from-purple-100 via-purple-50 to-white flex flex-col justify-center items-center min-h-screen text-center">
+
+  <h1 class="text-8xl font-extrabold text-purple-600 mb-4 animate-pulse">500</h1>
+  <h2 class="text-3xl font-semibold mb-2 text-gray-800">حدث خطأ في السيرفر ⚙️</h2>
   <p class="text-gray-600 mb-6">نأسف، هناك مشكلة مؤقتة. حاول لاحقًا.</p>
-  <a href="{% url 'home' %}" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+  
+  <a href="{% url 'home' %}" 
+     class="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition transform hover:-translate-y-1 hover:shadow-lg">
     العودة إلى الصفحة الرئيسية
   </a>
+
 </body>
 </html>

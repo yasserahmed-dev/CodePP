@@ -3,156 +3,159 @@
 
 {% block title %}إنشاء حساب{% endblock %}
 
-
 {% block content %}
-<section class="signup-section">
-  <div class="container">
-    <div class="signup-card">
-      <h1>إنشاء حساب جديد</h1>
+<div class="container">
+  <div class="signup-card">
+    <h1>إنشاء حساب جديد</h1>
 
-      <form method="POST" action="{% url 'signup' %}">
-        {% csrf_token %}
+    <form method="POST" action="{% url 'signup' %}">
+      {% csrf_token %}
 
-        <div class="input-group">
-          <span class="icon"><i class="fa-solid fa-user"></i></span>
-          <input type="text" name="first_name" placeholder="الاسم الشخصي" autocomplete="name" required>
-        </div>
+      <div class="input-group">
+        <span class="icon"><i class="fa-solid fa-user"></i></span>
+        <input type="text" name="first_name" placeholder="الاسم الشخصي" autocomplete="name" required>
+      </div>
 
-        <div class="input-group">
-          <span class="icon"><i class="fa-solid fa-user"></i></span>
-          <input type="text" name="last_name" placeholder="الاسم العائلي" autocomplete="name" required>
-        </div>
+      <div class="input-group">
+        <span class="icon"><i class="fa-solid fa-user"></i></span>
+        <input type="text" name="last_name" placeholder="الاسم العائلي" autocomplete="name" required>
+      </div>
 
-        <div class="input-group">
-          <span class="icon"><i class="fa-solid fa-envelope"></i></span>
-          <input type="email" name="email" placeholder="البريد الإلكتروني" autocomplete="email" required>
-        </div>
+      <div class="input-group">
+        <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+        <input type="email" name="email" placeholder="البريد الإلكتروني" autocomplete="email" required>
+      </div>
 
-        <div class="input-group">
-          <span class="icon"><i class="fa-solid fa-lock"></i></span>
-          <input type="password" name="password1" placeholder="كلمة المرور" autocomplete="new-password" required>
-          <span class="toggle"><i class="fa-solid fa-eye"></i></span>
-        </div>
+      <div class="input-group">
+        <span class="icon"><i class="fa-solid fa-lock"></i></span>
+        <input type="password" name="password1" placeholder="كلمة المرور" autocomplete="new-password" required>
+      </div>
 
-        <div class="input-group">
-          <span class="icon"><i class="fa-solid fa-lock"></i></span>
-          <input type="password" name="password2" placeholder="تأكيد كلمة المرور" autocomplete="new-password" required>
-          <span class="toggle"><i class="fa-solid fa-eye"></i></span>
-        </div>
+      <div class="input-group">
+        <span class="icon"><i class="fa-solid fa-lock"></i></span>
+        <input type="password" name="password2" placeholder="تأكيد كلمة المرور" autocomplete="new-password" required>
+      </div>
 
-        <div class="terms">
-          <input type="checkbox" id="agreeTerms" name="terms" required>
-          <label for="agreeTerms">أوافق على الشروط والأحكام</label>
-        </div>
+      <div class="terms">
+        <input type="checkbox" id="agreeTerms" name="terms" required>
+        <label for="agreeTerms">أوافق على الشروط والأحكام</label>
+      </div>
 
-        <button type="submit" class="btn">إنشاء الحساب</button>
+      <button type="submit" class="btn">إنشاء الحساب</button>
 
-        <p class="alt">لديك حساب بالفعل؟ <a href="{% url 'login' %}">تسجيل الدخول</a></p>
-      </form>
-    </div>
+      <div class="signup">
+        <span>لديك حساب بالفعل؟</span>
+        <a href="{% url 'login' %}">تسجيل الدخول</a>
+      </div>
+    </form>
   </div>
-</section>
+</div>
+
 <style>
-  :root{
+:root {
   --primary: #3b82f6;
-  --accent: #2563eb;
-  --card-bg: rgba(255,255,255,0.95);
-  --radius: 18px;
-  --shadow: 0 30px 60px rgba(59,130,246,0.12);
+  --white: #fff;
+  --text: #333;
+  --radius: 16px;
+  --shadow: 0 20px 50px rgba(59, 130, 246, 0.15);
   --font: 'Poppins', sans-serif;
 }
 
-*{box-sizing: border-box; margin:0; padding:0}
+* { margin:0; padding:0; box-sizing: border-box; font-family: var(--font); }
 
-body{
-  font-family: var(--font);
-  padding: 0;
-  margin: 0;
+body {
   background-image: url("{% static 'images/bg.png' %}");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   height: 100vh;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* الحاوية */
-.container{
-  width:100%;
-  display:flex;
-  justify-content:center;
-  padding: 20px;
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-/* الكارت */
-.signup-card{
-  width:520px;
-  max-width:95%;
-  background: var(--card-bg);
+.signup-card {
+  background: var(--white);
   border-radius: var(--radius);
-  padding: 36px 34px;
   box-shadow: var(--shadow);
-  text-align:center;
-  backdrop-filter: blur(6px); /* تأثير glass */
+  padding: 2.5rem 2rem;
+  width: 500px;
+  max-width: 90%;
+  text-align: center;
 }
 
-/* العنوان */
-.signup-card h1{
+.signup-card h1 {
   margin-bottom: 1.5rem;
   background: linear-gradient(150deg, #3b82f6, #2563eb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 30px;
+  font-size: 28px;
 }
 
-/* مدخلات الحقول */
-.input-group{
-  position:relative;
-  margin-bottom:14px;
+.input-group {
+  position: relative;
+  margin-bottom: 1.2rem;
 }
 
-.input-group input{
-  width:100%;
-  padding: 12px 44px 12px 42px; /* مساحة للأيقونات يسارا ويمينًا */
+.input-group input {
+  width: 100%;
+  padding: 0.8rem 2.5rem;
+  border: 1px solid #d0d7e2;
   border-radius: 10px;
-  border: 1px solid rgba(60,90,150,0.12);
-  font-size: 15px;
-  outline:none;
-  transition: box-shadow .18s, border-color .18s;
-  background: #fff;
+  outline: none;
+  font-size: 1rem;
+  transition: 0.2s;
 }
 
-.input-group input:focus{
-  box-shadow: 0 6px 18px rgba(37,99,235,0.12);
-  border-color: rgba(37,99,235,0.4);
+.input-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 4px rgba(59, 130, 246, 0.3);
 }
 
-/* الأيقونات داخل الحقل */
-.icon{
-  position:absolute;
-  left:12px;
-  top:50%;
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
   transform: translateY(-50%);
-  color:#9aa5b1;
-  font-size:16px;
+  font-size: 1.2rem;
+  color: #9aa5b1;
 }
 
-/* أيقونة العرض/الإخفاء */
-.toggle{
-  position:absolute;
-  right:12px;
-  top:50%;
+.toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.8rem;
   transform: translateY(-50%);
-  cursor:pointer;
-  color:#9aa5b1;
-  font-size:16px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #9aa5b1;
 }
 
-/* Terms */
-.terms{
+.btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  padding: 0.8rem;
+  width: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(37, 99, 235, 0.4);
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+}
+
+.terms {
   display:flex;
   align-items:center;
   gap:8px;
@@ -162,55 +165,53 @@ body{
   justify-content:flex-start;
 }
 
-/* زر التسجيل */
-.btn{
-  display:inline-block;
-  padding:12px 46px;
-  border-radius: 30px;
-  border:none;
-  cursor:pointer;
-  background: linear-gradient(135deg,var(--primary),var(--accent));
-  color:#fff;
-  font-weight:600;
-  font-size:16px;
-  box-shadow: 0 10px 30px rgba(37,99,235,0.18);
-  transition: transform .15s, box-shadow .15s;
-  margin: 6px 0 8px;
+.signup {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
-.btn:hover{
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(37,99,235,0.2);
+.signup a {
+  color: var(--primary);
+  text-decoration: none;
+  margin-left: 5px;
 }
 
-/* رسالة الخطأ/النجاح */
-#formMessage{
-  margin-top:10px;
-  min-height:18px; /* يحافظ على المساحة */
-  font-size:14px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signup-card { width: 90%; padding: 2rem 1.5rem; }
+  .signup-card h1 { font-size: 26px; }
+  .btn { width: 70%; }
 }
 
-/* الرابط السفلي */
-.alt{
-  margin-top:12px;
-  font-size:14px;
-  color:#3366aa;
+@media (max-width: 480px) {
+  .signup-card { width: 95%; padding: 1.5rem 1rem; }
+  .signup-card h1 { font-size: 22px; }
+  .input-group input { padding: 0.7rem 2rem; font-size: 0.9rem; }
+  .btn { width: 80%; font-size: 0.9rem; }
 }
-.alt a{ color:var(--primary); text-decoration: none }
-
-/* Responsive adjustments */
-@media (max-width: 768px){
-  .signup-card{ padding: 28px 22px; }
-  .btn{ padding:10px 36px; width: 70%; }
-}
-
-@media (max-width: 480px){
-  .signup-card{ padding:20px 16px; }
-  .signup-card h1{ font-size:22px; }
-  .input-group input{ padding:10px 38px 10px 40px; font-size:14px; }
-  .terms{ font-size:13px; }
-  .btn{ width:80%; padding:10px 26px; font-size:15px; }
-}
-
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const passwordFields = document.querySelectorAll('.input-group input[type="password"]');
+
+  passwordFields.forEach(input => {
+    const toggle = document.createElement('span');
+    toggle.classList.add('toggle');
+    toggle.innerHTML = '<i class="fa-solid fa-eye"></i>';
+    input.parentNode.appendChild(toggle);
+
+    toggle.addEventListener('click', function() {
+      if (input.type === 'password') {
+        input.type = 'text';
+        this.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+      } else {
+        input.type = 'password';
+        this.innerHTML = '<i class="fa-solid fa-eye"></i>';
+      }
+    });
+  });
+});
+</script>
 {% endblock %}
