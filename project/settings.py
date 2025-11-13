@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'CodePP',
     'login',
+    'profiles',
 ]
 
 MIDDLEWARE = [

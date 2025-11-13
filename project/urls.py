@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('CodePP.urls')),
     path('login/',include('login.urls')),
+    path('profile/',include('profiles.urls')),
 ]
 
 
