@@ -1,0 +1,169 @@
+{% extends "parts/base.html" %}
+
+{% block title %}Code++ | تحديد مستوى الخبرة{% endblock %}
+
+{% block styles %}
+
+<style>
+    .onboard-container {
+        display: flex;
+        justify-content: center;
+        padding: 2rem 1rem;
+    }
+
+    .onboard-card {
+        background-color: #1e1e1e;
+        border-radius: 16px;
+        padding: 2rem;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .onboard-card h1 {
+        text-align: center;
+        font-size: 1.8rem;
+        background: linear-gradient(150deg, #ffc107, #ff9800);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+    }
+
+    .onboard-card p {
+        text-align: center;
+        color: #b0b0b0;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    /* الشبكة المتجاوبة للكروت */
+    .choices {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+    }
+
+    @media(min-width: 600px) {
+        .choices {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    .choice-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* محاذاة رأسية */
+        padding: 1.5rem 1rem;
+        border-radius: 12px;
+        border: 2px solid #444;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        background-color: #2a2a2a;
+        user-select: none;
+        text-align: center;
+        min-height: 180px; /* ارتفاع موحد لكل الكروت */
+    }
+
+    .choice-label i {
+        font-size: 2rem;
+        color: #ffc107;
+        margin-bottom: 0.8rem;
+    }
+
+    .choice-label h4 {
+        margin: 0 0 0.3rem 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .choice-label span {
+        font-size: 0.85rem;
+        color: #b0b0b0;
+    }
+
+    /* لا شيء عند hover */
+    .choice-label:hover {
+        background-color: #2a2a2a;
+        border-color: #444;
+    }
+
+    /* التحديد عند الضغط فقط */
+    input[type="radio"]:checked + .choice-label {
+        background-color: #3a3a3a;
+        border-color: #ffc107;
+    }
+
+    .btn-next {
+        margin-top: 2rem;
+        width: 100%;
+        padding: 0.9rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: linear-gradient(135deg, #ffc107, #ff9800);
+        color: #121212;
+        transition: all 0.2s ease;
+    }
+
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,193,7,0.3);
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="onboard-container">
+    <div class="onboard-card">
+        <h1>ما مستوى خبرتك في البرمجة؟</h1>
+        <p>علشان نرشّح لك أفضل الدورات، حدّد مستواك.</p>
+
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="choices">
+            <div>
+                <input type="radio" name="experience_level" id="beginner" value="beginner">
+                <label for="beginner" class="choice-label">
+                    <i class="fa-solid fa-seedling"></i>
+                    <h4>مبتدئ</h4>
+                    <span>لسه بادئ أو ما عندك خبرة.</span>
+                </label>
+            </div>
+
+            <div>
+                <input type="radio" name="experience_level" id="intermediate" value="intermediate">
+                <label for="intermediate" class="choice-label">
+                    <i class="fa-solid fa-rocket"></i>
+                    <h4>متوسط</h4>
+                    <span>عندك تجارب بسيطة ومشاريع صغيرة.</span>
+                </label>
+            </div>
+
+            <div>
+                <input type="radio" name="experience_level" id="advanced" value="advanced">
+                <label for="advanced" class="choice-label">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                    <h4>متقدم / محترف</h4>
+                    <span>تتعامل مع مشاريع حقيقية أو عندك خبرة قوية.</span>
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-next">متابعة</button>
+    </form>
+</div>
+
+</div>
+
+{% endblock %}

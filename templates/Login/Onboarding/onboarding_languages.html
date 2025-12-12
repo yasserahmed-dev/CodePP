@@ -1,0 +1,172 @@
+{% extends "parts/base.html" %}
+
+{% block title %}Code++ | اختيار لغات البرمجة{% endblock %}
+
+{% block styles %}
+
+<style>
+    .onboard-container {
+        display: flex;
+        justify-content: center;
+        padding: 2rem 1rem;
+    }
+
+    .onboard-card {
+        background-color: #1e1e1e;
+        border-radius: 16px;
+        padding: 2rem 1rem;
+        max-width: 700px;
+        width: 100%;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .onboard-card h1 {
+        text-align: center;
+        font-size: 1.7rem;
+        background: linear-gradient(150deg, #ffc107, #ff9800);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+    }
+
+    .onboard-card p {
+        text-align: center;
+        color: #b0b0b0;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    .tags-grid {
+        display: grid;
+        gap: 0.8rem;
+        grid-template-columns: 1fr;
+    }
+
+    @media(min-width: 480px) {
+        .tags-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media(min-width: 768px) {
+        .tags-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media(min-width: 1024px) {
+        .tags-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    .tag-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 12px;
+        border: 2px solid #444;
+        cursor: pointer;
+        background-color: #2a2a2a;
+        color: #fff;
+        font-size: 0.95rem;
+        user-select: none;
+        transition: all 0.25s ease;
+        min-height: 80px;
+    }
+
+    input[type="checkbox"]:checked + .tag-label {
+        border-color: #ffc107;
+        background-color: #3a3a3a;
+    }
+
+    .btn-next {
+        margin-top: 2rem;
+        width: 100%;
+        padding: 0.9rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: linear-gradient(135deg, #ffc107, #ff9800);
+        color: #121212;
+        transition: all 0.2s ease;
+    }
+
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,193,7,0.3);
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="onboard-container">
+    <div class="onboard-card">
+
+        <h1>إيه اللغات اللي حابب تتعلمها أو تكمل فيها؟</h1>
+        <p>اختار كل اللغات اللي تهمك، ولو محتار سيب الباقي علينا.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="tags-grid">
+
+                <div>
+                    <input type="checkbox" name="languages" value="Python" id="py">
+                    <label for="py" class="tag-label">Python</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="languages" value="JavaScript" id="js">
+                    <label for="js" class="tag-label">JavaScript</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="languages" value="Java" id="java">
+                    <label for="java" class="tag-label">Java</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="languages" value="C#" id="csharp">
+                    <label for="csharp" class="tag-label">C#</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="languages" value="Go" id="go">
+                    <label for="go" class="tag-label">Go</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="languages" value="Dart" id="dart">
+                    <label for="dart" class="tag-label">Dart</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="languages" value="C++" id="cpp">
+                    <label for="cpp" class="tag-label">C++</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="languages" value="Not Sure" id="not_sure">
+                    <label for="not_sure" class="tag-label">مش عارف — رشّحولي</label>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-next">متابعة</button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

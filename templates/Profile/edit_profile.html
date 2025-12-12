@@ -1,0 +1,158 @@
+{% extends "parts/base.html" %}
+{% load static %}
+
+{% block title %}Code++ | تعديل الملف الشخصي{% endblock %}
+
+{% block styles %}
+<style>
+/* ==============================
+   Dark Mode — نفس ستايل تسجيل الدخول
+   ============================== */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 90px;
+}
+
+.edit-container {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 500px; /* نفس حجم تسجيل الدخول */
+    margin: auto;
+    transition: 0.3s;
+}
+
+.edit-container h1 {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    font-size: 2rem;
+    background: linear-gradient(150deg, #ffc107, #ff9800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ==============================
+   نفس تصميم حقول تسجيل الدخول
+   ============================== */
+.input-group {
+    position: relative;
+    margin-bottom: 1.3rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.9rem 3rem 0.9rem 1rem;
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #ffc107;
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+}
+
+.input-group .icon {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    color: #b0b0b0;
+    font-size: 1.1rem;
+}
+
+/* ==============================
+   زر الحفظ مثل زر تسجيل الدخول
+   ============================== */
+.btn-save {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+    color: #121212;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+}
+
+.btn-save:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255,193,7,0.3);
+}
+
+/* رابط الرجوع */
+.links {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.links a {
+    color: #ffc107;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.links a:hover {
+    color: #ffc107;
+}
+
+@media(max-width: 480px) {
+    .edit-container {
+        padding: 1.8rem;
+        max-width: 92%;
+    }
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="edit-container">
+
+    <h1>تعديل الملف الشخصي</h1>
+
+    <form method="POST" action="{% url 'edit_profile' %}">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <span class="icon"><i class="fa-solid fa-user"></i></span>
+            <input type="text" name="first_name" placeholder="الاسم الشخصي"
+                   value="{{ user.first_name }}" required>
+        </div>
+
+        <div class="input-group">
+            <span class="icon"><i class="fa-solid fa-user"></i></span>
+            <input type="text" name="last_name" placeholder="الاسم العائلي"
+                   value="{{ user.last_name }}" required>
+        </div>
+
+        <div class="input-group">
+            <span class="icon"><i class="fa-solid fa-envelope"></i></span>
+            <input type="email" name="email" placeholder="البريد الإلكتروني"
+                   value="{{ user.email }}" required>
+        </div>
+
+        <button type="submit" class="btn-save">حفظ التعديلات</button>
+
+        <div class="links">
+            <a href="{% url 'profile' %}">العودة إلى الملف الشخصي</a>
+        </div>
+    </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "parts/base.html" %}
+
+{% block title %}Code++ | ملخصك الشخصي{% endblock %}
+
+{% block styles %}
+<style>
+    .onboard-container {
+        display: flex;
+        justify-content: center;
+        padding: 2rem 1rem;
+    }
+
+    .onboard-card {
+        background-color: #1e1e1e;
+        border-radius: 16px;
+        padding: 2rem 1rem;
+        max-width: 700px;
+        width: 100%;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        text-align: center;
+    }
+
+    .onboard-card h1 {
+        font-size: 1.7rem;
+        background: linear-gradient(150deg, #ffc107, #ff9800);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+    }
+
+    .summary-item {
+        background-color: #2a2a2a;
+        border-radius: 12px;
+        padding: 1rem 1.2rem;
+        margin-bottom: 1rem;
+        color: #fff;
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    .summary-item span {
+        font-weight: bold;
+        color: #ffc107;
+    }
+
+    .btn-next {
+        margin-top: 2rem;
+        width: 100%;
+        padding: 0.9rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: linear-gradient(135deg, #ffc107, #ff9800);
+        color: #121212;
+        transition: all 0.2s ease;
+    }
+
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,193,7,0.3);
+    }
+
+    p { color: #b0b0b0; margin-bottom: 1.5rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="onboard-container">
+    <div class="onboard-card">
+        <h1>جاهز نبدأ؟</h1>
+        <p>ده ملخص سريع للخيارات اللي حددتها، عشان نبدأ رحلتك التعليمية.</p>
+
+        <div class="summary-item">
+            مستوى التعلم: <span>{{ level }}</span>
+        </div>
+        <div class="summary-item">
+            اهتماماتك: <span>{{ interests|join:", " }}</span>
+        </div>
+        <div class="summary-item">
+            لغات البرمجة: <span>{{ languages|join:", " }}</span>
+        </div>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn-next">اعرض الدورات المناسبة لي</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

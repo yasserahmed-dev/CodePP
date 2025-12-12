@@ -1,0 +1,119 @@
+{% extends "parts/base.html" %}
+{% load static %}
+
+{% block title %}Code++ | حذف الحساب{% endblock %}
+
+{% block styles %}
+<style>
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding-top: 90px;
+}
+
+/* نفس تصميم كروت تسجيل الدخول */
+.delete-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    padding: 2.3rem;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+/* العنوان */
+.delete-card h1 {
+    background: linear-gradient(150deg, #e11d48, #b91c1c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* الوصف */
+.delete-card p {
+    color: #cfcfcf;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+/* زر الحذف */
+.btn-delete {
+    background: linear-gradient(135deg, #e11d48, #b91c1c);
+    width: 100%;
+    border: none;
+    padding: 0.9rem;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(225, 29, 72, 0.3);
+    transition: .3s;
+    font-size: 1rem;
+}
+
+.btn-delete:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(225,29,72,0.4);
+}
+
+
+/* رابط الرجوع */
+.links {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.links a {
+    color: #ffc107;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.links a:hover {
+    color: #ffc107;
+}
+
+/* موبايل */
+@media (max-width: 480px) {
+    .delete-card {
+        padding: 1.8rem;
+    }
+    .delete-card h1 {
+        font-size: 24px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-card">
+
+    <h1>حذف الحساب</h1>
+
+    <p>
+        عند حذف الحساب سيتم فقدان جميع البيانات  
+        بما فيها الدورات والشهادات والتقدم التعليمي.  
+        يرجى التأكد قبل المتابعة.
+    </p>
+
+    <form method="POST" action="{% url 'delete_account' %}">
+        {% csrf_token %}
+        
+        <button type="submit" class="btn-delete">
+            إرسال كود التحقق إلى البريد الإلكتروني
+        </button>
+    </form>
+
+    <div class="links">
+        <a href="{% url 'profile' %}">العودة إلى الملف الشخصي</a>
+    </div>
+</div>
+{% endblock %}

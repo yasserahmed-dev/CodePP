@@ -1,0 +1,22 @@
+{% extends "parts/base.html" %}
+{% block title %}خطأ في السيرفر | Code++{% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column justify-content-center align-items-center py-5" style="min-height: 70vh;">
+
+    <div class="text-center">
+        <h1 class="display-1 fw-bold" style="font-size: 7rem; color: #9b59b6;">500</h1>
+        <h2 class="fw-bold mb-3 text-white">حدث خطأ في السيرفر</h2>
+
+        <p class="text-muted mb-4">
+            نأسف، يبدو أن هناك مشكلة مؤقتة في النظام. يرجى المحاولة لاحقًا.
+        </p>
+
+        <a href="{% url 'home' %}"
+           class="btn btn-warning px-4 py-2 rounded-3 fw-bold">
+            العودة إلى الصفحة الرئيسية
+        </a>
+    </div>
+
+</div>
+{% endblock %}

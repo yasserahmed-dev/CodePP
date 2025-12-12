@@ -1,0 +1,123 @@
+{% extends "parts/base.html" %}
+
+{% block title %}Code++ | محرر الأكواد{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+
+<style>
+    #controls {
+        padding: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        background:#2a2a2a;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    #editor { height: 400px; border-radius: 8px; }
+
+    #run-btn {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #ffc107, #ff9800);
+        color: #121212;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    #run-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,193,7,0.3); }
+
+    #output {
+        background:#2e2e2e;
+        padding:15px;
+        min-height:150px;
+        overflow-y:auto;
+        white-space:pre-wrap;
+        border-top:1px solid #444;
+        border-radius: 8px;
+        margin-top: 1rem;
+        color: #fff;
+        font-family: 'Courier New', monospace;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="text-center mb-4">محرر الأكواد++Code</h1>
+    <ul>
+        <li>يجب كتابه المخرجات باللغة الانجليزية</li>
+        <li>لا يسمح بكتابة المخرجات باللغة العربية</li>
+        <li>هذا المحرر يستخدم للتعلم للتجربة فقط</li>
+    </ul>
+
+    <div id="controls">
+        <label class="me-2">اختر اللغة:</label>
+        <select id="language" class="form-select w-auto">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="cpp">++C</option>
+            <option value="csharp">#C</option>
+            <option value="java">Java</option>
+        </select>
+        <button id="run-btn">تشغيل الكود</button>
+    </div>
+
+    <textarea id="editor">print("yasser")</textarea>
+    <div id="output" dir="ltr"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/clike/clike.min.js"></script>
+
+<script>
+const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+    lineNumbers:true,
+    mode:"python",
+    theme:"dracula"
+});
+
+const langSelect = document.getElementById("language");
+const outputDiv = document.getElementById("output");
+
+langSelect.addEventListener("change", () => {
+    const lang = langSelect.value;
+    let mode = "python";
+    if(lang==="javascript") mode="javascript";
+    if(lang==="cpp") mode="text/x-c++src";
+    if(lang==="csharp") mode="text/x-csharp";
+    if(lang==="java") mode="text/x-java";
+    editor.setOption("mode", mode);
+});
+
+document.getElementById("run-btn").addEventListener("click", async ()=>{
+    const code = editor.getValue();
+    const lang = langSelect.value;
+    outputDiv.innerText = "...جاري التشغيل";
+
+    try{
+        const res = await fetch("/Code_editor/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({code, lang})
+        });
+
+        const data = await res.json();
+        outputDiv.innerText = data.output;
+    }catch(err){
+        outputDiv.innerText = "حدث خطأ أثناء الاتصال بالخادم: " + err;
+        console.error(err);
+    }
+});
+</script>
+{% endblock %}

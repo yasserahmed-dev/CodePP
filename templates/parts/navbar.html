@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center text-warning" href="{% url 'home' %}">
+      <i class="fa-solid fa-code me-2"></i>++Code
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        
+        <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}"><i class="fa-solid fa-house ms-1"></i> الرئيسية</a></li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                <i class="fa-solid fa-id-card ms-1"></i> حسابي
+            </a>
+            <ul class="dropdown-menu text-end">
+                <li><a class="dropdown-item" href="{% url 'profile' %}">الملف الشخصي</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">إضافة لغات</a></li>
+                <li><a class="dropdown-item" href="#">إضافة كورسات</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            <i class="fa-solid fa-id-card ms-1"></i> المسار التعليمي
+          </a>
+          <ul class="dropdown-menu text-end">
+            <li><a class="dropdown-item" href="#">الكورسات</a></li>
+            <li><a class="dropdown-item" href="#">المسارات</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-solid fa-layer-group ms-1"></i> اللغات</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'code_editor' %}"><i class="fa-solid fa-terminal ms-1"></i> المحرر</a></li>
+
+      </ul>
+      <div class="d-flex align-items-center mt-3 mt-lg-0">
+        <a href="{% url 'signup' %}" class="btn btn-outline-warning btn-sm me-2">إنشاء حساب</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn btn-warning btn-sm">تسجيل الخروج</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-warning btn-sm">تسجيل الدخول</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
